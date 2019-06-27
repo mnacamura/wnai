@@ -1,0 +1,13 @@
+# R stuff
+^\.lintr$
+^\.travis\.yml$
+^LICENSE\.md$
+^\.RData$
+^\.Rhistory$
+^\.Rprofile$
+
+# Nix and direnv stuff
+^\.envrc$
+^\.direnv$
+^result$
+\.nix$

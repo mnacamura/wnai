@@ -1,0 +1,17 @@
+Package: wnai
+Title: Western North American Indian Dataset
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Mitsuhiro",
+           family = "Nakamura",
+           role = c("aut", "cre"),
+           email = "m.nacamura@gmail.com")
+Description: Western North American Indian dataset, extracted from D-PLACE
+             data repository.
+License: CC-BY-40 + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    tibble
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
