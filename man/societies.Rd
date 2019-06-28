@@ -4,14 +4,15 @@
 \name{societies}
 \alias{societies}
 \title{Societies in the WNAI dataset.}
-\format{A data frame with 172 societies (rows) and 5 variables (columns):
+\format{A data frame with 172 societies (rows) and 6 variables (columns):
 \describe{
-\item{\code{id}}{D-PLACE-wide unique identifier for the society}
-\item{\code{name}}{Name of the society}
-\item{\code{glottocode}}{Code for the most specific Glottolog languoid
-which can be assigned to this society}
-\item{\code{latitude}}{location of the society}
-\item{\code{longitude}}{location of the society}
+\item{\code{id}}{D-PLACE-wide id for the society}
+\item{\code{name}}{name of the society}
+\item{\code{alt_names}}{alternative names of the society (comma separated)}
+\item{\code{glottocode}}{code of the most specific Glottolog languoid for
+the society}
+\item{\code{latitude}}{location of the society in latitude}
+\item{\code{longitude}}{location of the society in longitude}
 }}
 \source{
 Jorgensen, J. G. (1980) \emph{Western Indians: Comparative Environments,
