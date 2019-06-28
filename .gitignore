@@ -1,7 +1,6 @@
 # R stuff
 .RData
 .Rhistory
-.Rprofile
 
 # Nix and direnv stuff
 .direnv
