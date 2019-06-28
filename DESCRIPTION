@@ -11,6 +11,7 @@ Description: Western North American Indian dataset, extracted from D-PLACE
 License: CC-BY-40 + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends: R (>= 3.5.0)
 Imports: 
     tibble
 Roxygen: list(markdown = TRUE)
