@@ -11,3 +11,15 @@ test_that("societies are valid", {
     expect_type(societies[["latitude"]], "double")
     expect_type(societies[["longitude"]], "double")
 })
+
+test_that("variables are valid", {
+    expect_equal(dim(variables), c(429, 5))
+    expect_equal(colnames(variables),
+                 c("id", "title", "type", "categories", "definition"))
+    expect_type(variables[["id"]], "character")
+    expect_type(variables[["title"]], "character")
+    expect_s3_class(variables[["type"]], "factor")
+    expect_equal(levels(variables[["type"]]), c("cat", "ord", "cont"))
+    expect_type(variables[["categories"]], "character")
+    expect_type(variables[["definition"]], "character")
+})

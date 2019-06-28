@@ -6,10 +6,13 @@ mkShell {
   buildInputs = with rPackages; [
     devtools
     dplyr
+    forcats
     lintr
     magrittr
+    purrr
     readr
     roxygen2
+    stringr
     testthat
     usethis
   ];
