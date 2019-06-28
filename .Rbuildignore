@@ -5,6 +5,7 @@
 ^\.RData$
 ^\.Rhistory$
 ^\.Rprofile$
+^data-raw$
 
 # Nix and direnv stuff
 ^\.envrc$
