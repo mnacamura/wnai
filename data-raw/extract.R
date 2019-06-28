@@ -26,7 +26,7 @@ local({
 
 ## Apply recent changes to the release vesion
 setwd(work_dir)
-system2("patch", c("-p1", "<", file.path(proj_dir, "data-raw", "dplace.patch")))
+system2("patch", c("-p1", "<", file.path(proj_dir, "data-raw", "aff561a3.patch")))
 setwd(proj_dir)
 
 societies <- read_csv(file.path(wnai_dir, "societies.csv"),
@@ -37,8 +37,14 @@ societies <- read_csv(file.path(wnai_dir, "societies.csv"),
                                        Lat             = col_double(),
                                        Long            = col_double())
                       ) %>%
-    dplyr::select(id, pref_name_for_society, glottocode, Lat, Long) %>%
+    dplyr::select(id,
+                  pref_name_for_society,
+                  alt_names_by_society,
+                  glottocode,
+                  Lat,
+                  Long) %>%
     dplyr::rename(name = pref_name_for_society,
+                  alt_names = alt_names_by_society,
                   latitude = Lat,
                   longitude = Long)
 use_data(societies, overwrite = TRUE)
