@@ -5,6 +5,7 @@ mkShell {
 
   buildInputs = with rPackages; [
     devtools
+    doParallel
     dplyr
     forcats
     lintr

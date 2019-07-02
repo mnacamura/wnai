@@ -3,6 +3,9 @@ library(readr)
 library(tibble)
 library(usethis)
 
+library(doParallel)
+registerDoParallel(parallel::detectCores())
+
 dplace_rev <- Sys.getenv("DPLACE_REV")
 if (dplace_rev == "")
     stop("environment variable DPLACE_REV is not set")
@@ -91,3 +94,28 @@ variables %>%
 variables %>% dplyr::select(-notes) -> variables
 
 use_data(variables, overwrite = TRUE)
+
+data_ <- read_csv(file.path(wnai_dir, "data.csv"),
+                  col_types = cols(.default = col_character(),
+                                   year = col_integer(),
+                                   code = col_integer())
+                  ) %>%
+    dplyr::select(soc_id,
+                  var_id,
+                  code)
+data <- foreach(i = societies[["id"]], .combine = rbind) %:%
+    foreach(j = variables[["id"]], .combine = c) %dopar% {
+        dplyr::filter(data_, soc_id == i, var_id == j)[["code"]]
+    }
+colnames(data) <- variables[["id"]]
+data <- as_tibble(data)
+for (i in seq.int(nrow(variables))) {
+    var_id <- variables[i, "id"][[1]]
+    type <- variables[i, "type"][[1]]
+    data[[var_id]] <- switch(as.character(type),
+                             cat = as.factor(data[[var_id]]),
+                             ord = as.ordered(data[[var_id]]),
+                             cont = as.integer(data[[var_id]]))
+}
+data <- dplyr::bind_cols(tibble(soc_id = societies[["id"]]), data)
+use_data(data, overwrite = TRUE)

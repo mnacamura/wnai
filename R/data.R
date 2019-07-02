@@ -45,3 +45,22 @@
 #' The dataset in D-PLACE is imported from _World Cultures_ CD-ROM (2011)
 #' using codes described in Jorgensen (1999).
 "variables"
+
+#' Data in the WNAI dataset.
+#'
+#' @format A data frame with 172 societies (rows) and 430 variables (columns):
+#' \describe{
+#'     \item{`soc_id`}{D-PLACE-wide id for the society}
+#'     \item{`WNAI8..WNAI438`}{429 variables for each society}
+#' }
+#' @source
+#' Jorgensen, J. G. (1980) _Western Indians: Comparative Environments,
+#' Languages and Cultures of 172 Western American Indian Tribes_. W. H.
+#' Freeman.
+#'
+#' Jorgensen, J. G. (1999) Codebook for Western Indians data. _World Cultures_
+#' 10(2): 144-293.
+#'
+#' The dataset in D-PLACE is imported from _World Cultures_ CD-ROM (2011)
+#' using codes described in Jorgensen (1999).
+"data"
