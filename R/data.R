@@ -64,3 +64,27 @@
 #' The dataset in D-PLACE is imported from _World Cultures_ CD-ROM (2011)
 #' using codes described in Jorgensen (1999).
 "data"
+
+#' Codes in the WNAI dataset.
+#'
+#' @format A nested data frame with 429 pairs of variables and codes (rows):
+#' \describe{
+#'     \item{`var_id`}{D-PLACE-wide id for the variable}
+#'     \item{`codes`}{codes for each variable:
+#'         \describe{
+#'             \item{`code`}{codes of the variable in appropriate type}
+#'             \item{`name`}{short description of the codes}
+#'             \item{`description`}{longer description of the codes}
+#'         }}
+#' }
+#' @source
+#' Jorgensen, J. G. (1980) _Western Indians: Comparative Environments,
+#' Languages and Cultures of 172 Western American Indian Tribes_. W. H.
+#' Freeman.
+#'
+#' Jorgensen, J. G. (1999) Codebook for Western Indians data. _World Cultures_
+#' 10(2): 144-293.
+#'
+#' The dataset in D-PLACE is imported from _World Cultures_ CD-ROM (2011)
+#' using codes described in Jorgensen (1999).
+"codes"

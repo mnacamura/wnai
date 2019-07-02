@@ -15,6 +15,7 @@ mkShell {
     roxygen2
     stringr
     testthat
+    tidyr
     usethis
   ];
 

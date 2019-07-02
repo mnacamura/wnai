@@ -119,3 +119,26 @@ for (i in seq.int(nrow(variables))) {
 }
 data <- dplyr::bind_cols(tibble(soc_id = societies[["id"]]), data)
 use_data(data, overwrite = TRUE)
+
+codes <- read_csv(file.path(wnai_dir, "codes.csv"),
+                      col_types = cols(.default = col_character(),
+                                       code = col_integer())
+                      ) %>%
+        dplyr::select(var_id,
+                      code,
+                      name,
+                      description) %>%
+        dplyr::group_by(var_id) %>%
+        tidyr::nest() %>%
+        dplyr::rename(codes = data)
+for (i in seq.int(nrow(codes))) {
+    var_id <- codes[i, ][["var_id"]]
+    type <- variables[i, "type"][[1]]
+    codes[i, ][["codes"]][[1]][["code"]] <- switch(as.character(type),
+        cat = as.factor(codes[i, ][["codes"]][[1]][["code"]]),
+        ord = as.ordered(codes[i, ][["codes"]][[1]][["code"]]),
+        cont = as.integer(codes[i, ][["codes"]][[1]][["code"]]))
+    codes[i, ][["codes"]][[1]] <- dplyr::filter(codes[i, ][["codes"]][[1]],
+                                               !is.na(code))
+}
+use_data(codes, overwrite = TRUE)
