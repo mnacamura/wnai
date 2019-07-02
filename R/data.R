@@ -1,3 +1,5 @@
+version <- "v2.0.1"
+
 #' Societies in the WNAI dataset.
 #'
 #' @format A data frame with 172 societies (rows) and 6 variables (columns):
