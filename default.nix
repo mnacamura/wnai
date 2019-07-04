@@ -4,7 +4,7 @@ with pkgs;
 
 let
   pname = "wnai";
-  version = "0.0.0.9000";
+  version = "0.0.0.9030";
 
   depends = with rPackages; [
     tibble
