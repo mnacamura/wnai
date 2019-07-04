@@ -15,13 +15,13 @@ test_that("societies are valid", {
 test_that("variables are valid", {
     expect_equal(dim(variables), c(429, 5))
     expect_equal(colnames(variables),
-                 c("id", "name", "type", "categories", "definition"))
+                 c("id", "name", "type", "categories", "definitions"))
     expect_type(variables[["id"]], "character")
     expect_type(variables[["name"]], "character")
     expect_s3_class(variables[["type"]], "factor")
     expect_equal(levels(variables[["type"]]), c("cat", "ord", "cont"))
     expect_type(variables[["categories"]], "character")
-    expect_type(variables[["definition"]], "character")
+    expect_type(variables[["definitions"]], "character")
 })
 
 test_that("codes are valid", {
