@@ -110,10 +110,11 @@ codes <- read_csv(file.path(wnai_dir, "codes.csv"),
 for (i in seq.int(nrow(codes))) {
     var_id <- codes[["var_id"]][i]
     type <- variables[["type"]][i]
+    codes_ <- codes[["codes"]][[i]][["code"]]
     codes[["codes"]][[i]][["code"]] <- switch(as.character(type),
-        cat = factor(codes[["codes"]][[i]][["code"]]),
-        ord = ordered(codes[["codes"]][[i]][["code"]]),
-        cont = as.integer(codes[["codes"]][[i]][["code"]]))
+        cat = factor(codes_, levels = sort(codes_)),
+        ord = ordered(codes_, levels = sort(codes_)),
+        cont = as.integer(codes_))
 }
 
 use_data(codes, overwrite = TRUE)

@@ -32,6 +32,8 @@ test_that("codes are valid", {
     for (codes in codes[["codes"]]) {
         expect_equal(ncol(codes), 3)
         expect_equal(colnames(codes), c("code", "name", "description"))
+        lvls <- as.integer(levels(codes[["code"]]))
+        expect_equal(lvls, sort(lvls))
         expect_type(codes[["name"]], "character")
         expect_type(codes[["description"]], "character")
     }
