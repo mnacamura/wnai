@@ -145,4 +145,5 @@ use_data(codes, overwrite = TRUE)
 read_file("R/rev.R") %>%
     stringr::str_replace("^dplace_rev <- .+$",
                          paste0("dplace_rev <- \"", dplace_rev, "\"")) %>%
+    stringr::str_trim() %>%
     write(file = "R/rev.R")

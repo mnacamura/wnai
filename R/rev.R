@@ -3,4 +3,3 @@
 #' @return the D-PLACE revision
 #' @export
 dplace_rev <- "v2.0.1"
-
