@@ -1,4 +1,4 @@
-# wnai — R package of the WNAI ethnological dataset
+# wnai — R package of the WNAI ethnographic dataset
 
 [![Build Status](https://travis-ci.org/mnacamura/wnai.svg?branch=master)](https://travis-ci.org/mnacamura/wnai)
 
