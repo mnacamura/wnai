@@ -33,8 +33,8 @@ if (!file.exists(file.path(work_dir, ".patched"))) {
     setwd(proj_dir)
     write("TRUE", file.path(work_dir, ".patched"))
 }
-c(paste0("# Changes made in this package (from dplace-data ",
-         dplace_rev, ")\n"),
+c(paste0("# Patches applied to dplace-data ", dplace_rev,
+         " in this package\n"),
   "```diff",
   read_file(patch_file),
   "```"
@@ -88,7 +88,7 @@ variables %>%
     purrr::map(~ paste0("- ", .$id, ": ",
                         stringr::str_remove(.$notes, "NOTE: +"))) %>%
     purrr::map(~ stringr::str_wrap(., width = 78, exdent = 2)) %>%
-    c(paste0("\n# Errata (fixed in dplace-data ", dplace_rev, ")\n"), .,
+    c(paste0("\n# Errata for variables in dplace-data ", dplace_rev, "\n"), .,
       list(sep = "\n")) %>%
     do.call(paste, .) %>%
     write(file = "NOTES.md", append = TRUE)

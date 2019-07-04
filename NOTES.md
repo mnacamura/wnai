@@ -1,4 +1,4 @@
-# Changes made in this package (from dplace-data v2.0.1)
+# Patches applied to dplace-data v2.0.1 in this package
 
 ```diff
 diff --git a/datasets/WNAI/codes.csv b/datasets/WNAI/codes.csv
@@ -60,7 +60,7 @@ index 23c8034..00f855c 100644
 
 ```
 
-# Errata (fixed in dplace-data v2.0.1)
+# Errata for variables in dplace-data v2.0.1
 
 - WNAI24: Case 149 has a score of three, WNAI only lists present and absent as
   values. This was changed to missing data. [World Cultures 10(2), fall 1999]
