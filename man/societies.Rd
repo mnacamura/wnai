@@ -26,7 +26,7 @@ The dataset in D-PLACE is imported from \emph{World Cultures} CD-ROM (2011)
 using codes described in Jorgensen (1999).
 }
 \usage{
-societies
+wnai::societies
 }
 \description{
 Societies in the WNAI dataset.

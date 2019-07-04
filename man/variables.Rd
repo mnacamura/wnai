@@ -7,12 +7,12 @@
 \format{A data frame with 429 variables (rows) and 5 attributes (columns):
 \describe{
 \item{\code{id}}{D-PLACE-wide id for the variable}
-\item{\code{title}}{title of the variable}
+\item{\code{name}}{name of the variable}
 \item{\code{type}}{type of the variable, either \code{cat}egorical, \code{ord}inal, or
 \code{cont}inuous}
 \item{\code{categories}}{categories that can be assigned to the variable
 (comma separated)}
-\item{\code{definitions}}{definitions of terms used in the \code{title}}
+\item{\code{definitions}}{definitions of terms used in the \code{name} column}
 }}
 \source{
 Jorgensen, J. G. (1980) \emph{Western Indians: Comparative Environments,
@@ -26,7 +26,7 @@ The dataset in D-PLACE is imported from \emph{World Cultures} CD-ROM (2011)
 using codes described in Jorgensen (1999).
 }
 \usage{
-variables
+wnai::variables
 }
 \description{
 Variables in the WNAI dataset.

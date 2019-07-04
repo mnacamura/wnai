@@ -3,11 +3,11 @@
 \docType{data}
 \name{data}
 \alias{data}
-\title{Data in the WNAI dataset.}
+\title{Main data of the WNAI dataset.}
 \format{A data frame with 172 societies (rows) and 430 variables (columns):
 \describe{
 \item{\code{soc_id}}{D-PLACE-wide id for the society}
-\item{\code{WNAI8..WNAI438}}{429 variables for each society}
+\item{\code{WNAI8..WNAI438}}{values of 429 variables for the society}
 }}
 \source{
 Jorgensen, J. G. (1980) \emph{Western Indians: Comparative Environments,
@@ -21,9 +21,9 @@ The dataset in D-PLACE is imported from \emph{World Cultures} CD-ROM (2011)
 using codes described in Jorgensen (1999).
 }
 \usage{
-data
+wnai::data
 }
 \description{
-Data in the WNAI dataset.
+Main data of the WNAI dataset.
 }
 \keyword{datasets}

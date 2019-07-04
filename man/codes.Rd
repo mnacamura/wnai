@@ -3,15 +3,15 @@
 \docType{data}
 \name{codes}
 \alias{codes}
-\title{Codes in the WNAI dataset.}
-\format{A nested data frame with 429 pairs of variables and codes (rows):
+\title{Codes for each variable in the WNAI dataset.}
+\format{A nested data frame with 429 pairs of variable id and codes (rows):
 \describe{
 \item{\code{var_id}}{D-PLACE-wide id for the variable}
-\item{\code{codes}}{codes for each variable:
+\item{\code{codes}}{codes used in the variable:
 \describe{
-\item{\code{code}}{codes of the variable in appropriate type}
-\item{\code{name}}{short description of the codes}
-\item{\code{description}}{longer description of the codes}
+\item{\code{code}}{code in the variable}
+\item{\code{name}}{short description of the code}
+\item{\code{description}}{longer description of the code}
 }}
 }}
 \source{
@@ -26,9 +26,9 @@ The dataset in D-PLACE is imported from \emph{World Cultures} CD-ROM (2011)
 using codes described in Jorgensen (1999).
 }
 \usage{
-codes
+wnai::codes
 }
 \description{
-Codes in the WNAI dataset.
+Codes for each variable in the WNAI dataset.
 }
 \keyword{datasets}
