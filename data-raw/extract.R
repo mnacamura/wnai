@@ -26,22 +26,22 @@ for (file_name in paste(c("societies", "variables", "codes", "data"), "csv",
 }
 
 ## Apply recent changes to the release vesion
+patch_file <- file.path(proj_dir, "data-raw", "aff561a3.patch")
 if (!file.exists(file.path(work_dir, ".patched"))) {
-    patch_file <- file.path(proj_dir, "data-raw", "aff561a3.patch")
     setwd(work_dir)
     system2("patch", c("-p1", "<", patch_file))
     setwd(proj_dir)
-    c(paste0("# Changes made in this package (from dplace-data ",
-             dplace_rev, ")\n"),
-      "```diff",
-      read_file(patch_file),
-      "```"
-      ) %>%
-        c(list(sep = "\n")) %>%
-        do.call(paste, .) %>%
-        write(file = "NOTES.md")
     write("TRUE", file.path(work_dir, ".patched"))
 }
+c(paste0("# Changes made in this package (from dplace-data ",
+         dplace_rev, ")\n"),
+  "```diff",
+  read_file(patch_file),
+  "```"
+  ) %>%
+    c(list(sep = "\n")) %>%
+    do.call(paste, .) %>%
+    write(file = "NOTES.md")
 
 societies <- read_csv(file.path(wnai_dir, "societies.csv"),
                       col_types = cols(.default        = col_character(),
