@@ -16,16 +16,14 @@ wnai_dir <- file.path(work_dir, "datasets", "WNAI")
 if (!dir.exists(wnai_dir))
   dir.create(wnai_dir, recursive = TRUE)
 
-local({
-    base_url <- paste("https://raw.githubusercontent.com/D-PLACE/dplace-data",
-                      dplace_rev, "datasets/WNAI", sep = "/")
-    for (file_name in paste(c("societies", "variables", "codes", "data"),
-                            "csv", sep = ".")) {
-        path <- file.path(wnai_dir, file_name)
-        if (!file.exists(path))
-            download.file(paste(base_url, file_name, sep = "/"), path)
-    }
-})
+base_url <- paste("https://raw.githubusercontent.com/D-PLACE/dplace-data",
+                  dplace_rev, "datasets/WNAI", sep = "/")
+for (file_name in paste(c("societies", "variables", "codes", "data"), "csv",
+                        sep = ".")) {
+    path <- file.path(wnai_dir, file_name)
+    if (!file.exists(path))
+        download.file(paste(base_url, file_name, sep = "/"), path)
+}
 
 ## Apply recent changes to the release vesion
 if (!file.exists(file.path(work_dir, ".patched"))) {
@@ -70,17 +68,17 @@ variables <- read_csv(file.path(wnai_dir, "variables.csv"),
                       col_types = cols(.default = col_character(),
                                        type = col_factor())
                       ) %>%
-        dplyr::select(id,
-                      title,
-                      type,
-                      category,
-                      definition,
-                      notes) %>%
-        dplyr::mutate(type = forcats::fct_relabel(type,
-            ~ ifelse(. == "Categorical", "cat",
-              ifelse(. == "Ordinal", "ord",
-              ifelse(. == "Continuous", "cont", NA))))) %>%
-        dplyr::rename(categories = category)
+    dplyr::select(id,
+                  title,
+                  type,
+                  category,
+                  definition,
+                  notes) %>%
+    dplyr::mutate(type = forcats::fct_relabel(type,
+        ~ ifelse(. == "Categorical", "cat",
+          ifelse(. == "Ordinal", "ord",
+          ifelse(. == "Continuous", "cont", NA))))) %>%
+    dplyr::rename(categories = category)
 
 ## Export errata
 variables %>%
@@ -114,37 +112,34 @@ data <- foreach(i = societies[["id"]], .combine = rbind) %:%
 colnames(data) <- variables[["id"]]
 data <- as_tibble(data)
 for (i in seq.int(nrow(variables))) {
-    var_id <- variables[i, "id"][[1]]
-    type <- variables[i, "type"][[1]]
+    var_id <- variables[["id"]][i]
+    type <- variables[["type"]][i]
     data[[var_id]] <- switch(as.character(type),
                              cat = as.factor(data[[var_id]]),
                              ord = as.ordered(data[[var_id]]),
                              cont = as.integer(data[[var_id]]))
 }
 data <- dplyr::bind_cols(tibble(soc_id = societies[["id"]]), data)
+
 use_data(data, overwrite = TRUE)
 
 codes <- read_csv(file.path(wnai_dir, "codes.csv"),
                       col_types = cols(.default = col_character(),
                                        code = col_integer())
                       ) %>%
-        dplyr::select(var_id,
-                      code,
-                      name,
-                      description) %>%
-        dplyr::group_by(var_id) %>%
-        tidyr::nest() %>%
-        dplyr::rename(codes = data)
+    dplyr::select(var_id, code, name, description) %>%
+    tidyr::drop_na(code) %>%
+    dplyr::group_by(var_id) %>%
+    tidyr::nest(.key = "codes")
 for (i in seq.int(nrow(codes))) {
-    var_id <- codes[i, ][["var_id"]]
-    type <- variables[i, "type"][[1]]
-    codes[i, ][["codes"]][[1]][["code"]] <- switch(as.character(type),
-        cat = as.factor(codes[i, ][["codes"]][[1]][["code"]]),
-        ord = as.ordered(codes[i, ][["codes"]][[1]][["code"]]),
-        cont = as.integer(codes[i, ][["codes"]][[1]][["code"]]))
-    codes[i, ][["codes"]][[1]] <- dplyr::filter(codes[i, ][["codes"]][[1]],
-                                               !is.na(code))
+    var_id <- codes[["var_id"]][i]
+    type <- variables[["type"]][i]
+    codes[["codes"]][[i]][["code"]] <- switch(as.character(type),
+        cat = as.factor(codes[["codes"]][[i]][["code"]]),
+        ord = as.ordered(codes[["codes"]][[i]][["code"]]),
+        cont = as.integer(codes[["codes"]][[i]][["code"]]))
 }
+
 use_data(codes, overwrite = TRUE)
 
 read_file("R/rev.R") %>%
