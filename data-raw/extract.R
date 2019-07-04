@@ -98,32 +98,6 @@ variables %>% dplyr::select(-notes) -> variables
 
 use_data(variables, overwrite = TRUE)
 
-data_ <- read_csv(file.path(wnai_dir, "data.csv"),
-                  col_types = cols(.default = col_character(),
-                                   year = col_integer(),
-                                   code = col_integer())
-                  ) %>%
-    dplyr::select(soc_id,
-                  var_id,
-                  code)
-data <- foreach(i = societies[["id"]], .combine = rbind) %:%
-    foreach(j = variables[["id"]], .combine = c) %dopar% {
-        dplyr::filter(data_, soc_id == i, var_id == j)[["code"]]
-    }
-colnames(data) <- variables[["id"]]
-data <- as_tibble(data)
-for (i in seq.int(nrow(variables))) {
-    var_id <- variables[["id"]][i]
-    type <- variables[["type"]][i]
-    data[[var_id]] <- switch(as.character(type),
-                             cat = as.factor(data[[var_id]]),
-                             ord = as.ordered(data[[var_id]]),
-                             cont = as.integer(data[[var_id]]))
-}
-data <- dplyr::bind_cols(tibble(soc_id = societies[["id"]]), data)
-
-use_data(data, overwrite = TRUE)
-
 codes <- read_csv(file.path(wnai_dir, "codes.csv"),
                       col_types = cols(.default = col_character(),
                                        code = col_integer())
@@ -136,12 +110,39 @@ for (i in seq.int(nrow(codes))) {
     var_id <- codes[["var_id"]][i]
     type <- variables[["type"]][i]
     codes[["codes"]][[i]][["code"]] <- switch(as.character(type),
-        cat = as.factor(codes[["codes"]][[i]][["code"]]),
-        ord = as.ordered(codes[["codes"]][[i]][["code"]]),
+        cat = factor(codes[["codes"]][[i]][["code"]]),
+        ord = ordered(codes[["codes"]][[i]][["code"]]),
         cont = as.integer(codes[["codes"]][[i]][["code"]]))
 }
 
 use_data(codes, overwrite = TRUE)
+
+data_ <- read_csv(file.path(wnai_dir, "data.csv"),
+                  col_types = cols(.default = col_character(),
+                                   year = col_integer(),
+                                   code = col_integer())
+                  ) %>%
+    dplyr::select(soc_id,
+                  var_id,
+                  code)
+data <- foreach(i = societies[["id"]], .combine = rbind) %:%
+    foreach(j = variables[["id"]], .combine = c) %dopar% {
+        dplyr::filter(data_, soc_id == !!i, var_id == !!j)[["code"]]
+    }
+colnames(data) <- variables[["id"]]
+data <- as_tibble(data)
+for (i in seq.int(nrow(variables))) {
+    var_id <- variables[["id"]][i]
+    type <- variables[["type"]][i]
+    lvls <- levels(dplyr::filter(codes, var_id == !!var_id)[["codes"]][[1]][["code"]])
+    data[[var_id]] <- switch(as.character(type),
+                             cat = factor(data[[var_id]], levels = lvls),
+                             ord = ordered(data[[var_id]], levels = lvls),
+                             cont = as.integer(data[[var_id]]))
+}
+data <- dplyr::bind_cols(tibble(soc_id = societies[["id"]]), data)
+
+use_data(data, overwrite = TRUE)
 
 read_file("R/rev.R") %>%
     stringr::str_replace("^dplace_rev <- .+$",
