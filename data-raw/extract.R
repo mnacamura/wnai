@@ -75,7 +75,8 @@ variables <- read_csv(file.path(wnai_dir, "variables.csv"),
                   definition,
                   notes) %>%
     dplyr::rename(name = title,
-                  categories = category) %>%
+                  categories = category,
+                  definitions = definition) %>%
     dplyr::mutate(type = forcats::fct_relabel(type,
         ~ ifelse(. == "Categorical", "cat",
           ifelse(. == "Ordinal", "ord",
