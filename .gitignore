@@ -1,6 +1,7 @@
 # R stuff
 .RData
 .Rhistory
+data-raw/cache
 
 # Nix and direnv stuff
 .direnv

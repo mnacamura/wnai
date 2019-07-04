@@ -11,7 +11,7 @@ if (dplace_rev == "")
     stop("environment variable DPLACE_REV is not set")
 
 proj_dir <- getwd()
-work_dir <- tempdir()
+work_dir <- file.path(proj_dir, "data-raw", "cache", "dplace-data")
 wnai_dir <- file.path(work_dir, "datasets", "WNAI")
 if (!dir.exists(wnai_dir))
   dir.create(wnai_dir, recursive = TRUE)
@@ -28,18 +28,22 @@ local({
 })
 
 ## Apply recent changes to the release vesion
-patch_file <- "aff561a3.patch"
-setwd(work_dir)
-system2("patch", c("-p1", "<", file.path(proj_dir, "data-raw", patch_file)))
-setwd(proj_dir)
-c(paste0("# Changes made in this package (from dplace-data ", dplace_rev, ")\n"),
-  "```diff",
-  read_file(file.path("data-raw", patch_file)),
-  "```"
-  ) %>%
-    c(list(sep = "\n")) %>%
-    do.call(paste, .) %>%
-    write(file = "NOTES.md")
+if (!file.exists(file.path(work_dir, ".patched"))) {
+    patch_file <- file.path(proj_dir, "data-raw", "aff561a3.patch")
+    setwd(work_dir)
+    system2("patch", c("-p1", "<", patch_file))
+    setwd(proj_dir)
+    c(paste0("# Changes made in this package (from dplace-data ",
+             dplace_rev, ")\n"),
+      "```diff",
+      read_file(patch_file),
+      "```"
+      ) %>%
+        c(list(sep = "\n")) %>%
+        do.call(paste, .) %>%
+        write(file = "NOTES.md")
+    write("TRUE", file.path(work_dir, ".patched"))
+}
 
 societies <- read_csv(file.path(wnai_dir, "societies.csv"),
                       col_types = cols(.default        = col_character(),
