@@ -23,3 +23,31 @@ test_that("variables are valid", {
     expect_type(variables[["categories"]], "character")
     expect_type(variables[["definition"]], "character")
 })
+
+test_that("codes are valid", {
+    expect_equal(dim(codes), c(429, 2))
+    expect_equal(colnames(codes), c("var_id", "codes"))
+    expect_type(codes[["var_id"]], "character")
+    expect_type(codes[["codes"]], "list")
+    for (codes in codes[["codes"]]) {
+        expect_equal(ncol(codes), 3)
+        expect_equal(colnames(codes), c("code", "name", "description"))
+        expect_type(codes[["name"]], "character")
+        expect_type(codes[["description"]], "character")
+    }
+})
+
+test_that("data are valid", {
+    expect_equal(dim(data), c(172, 430))
+    expect_equal(colnames(data), c("soc_id", variables[["id"]]))
+    expect_type(data[["soc_id"]], "character")
+})
+
+test_that("types of codes and data are consistent", {
+    for (var_id in variables[["id"]]) {
+        code <- dplyr::filter(codes,
+                              var_id == !!var_id)[["codes"]][[1]][["code"]]
+        expect_equal(class(data[[var_id]]), class(code))
+        expect_equal(levels(data[[var_id]]), levels(code))
+    }
+})
