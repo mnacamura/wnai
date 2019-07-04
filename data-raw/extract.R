@@ -74,11 +74,12 @@ variables <- read_csv(file.path(wnai_dir, "variables.csv"),
                   category,
                   definition,
                   notes) %>%
+    dplyr::rename(name = title,
+                  categories = category) %>%
     dplyr::mutate(type = forcats::fct_relabel(type,
         ~ ifelse(. == "Categorical", "cat",
           ifelse(. == "Ordinal", "ord",
-          ifelse(. == "Continuous", "cont", NA))))) %>%
-    dplyr::rename(categories = category)
+          ifelse(. == "Continuous", "cont", NA)))))
 
 ## Export errata
 variables %>%
