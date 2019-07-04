@@ -1,5 +1,7 @@
 # wnai — R package of the WNAI ethnological dataset
 
+[![Build Status](https://travis-ci.org/mnacamura/wnai.svg?branch=master)](https://travis-ci.org/mnacamura/wnai)
+
 The Western North American Indian dataset compiled by Jorgensen (1980, 1999),
 extracted from [the D-PLACE data repository](https://github.com/D-PLACE/dplace-data).
 
